@@ -55,7 +55,7 @@ class Cat extends Model
 }
 And the second one would be to use the artisan CLI, which generates a class:
 
-php artisan make:model Cat
+php artisan make:model Cat 
 2. Laravel comes with a PHP CLI called artisan. What is your favorite artisan command?
 
 There are so many things that the CLI does out of the box. Even if they don't have a favorite command, they should be able to explain what some of them do. Here's a sample of available top-level commands:
