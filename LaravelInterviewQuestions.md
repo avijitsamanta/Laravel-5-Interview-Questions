@@ -1,89 +1,139 @@
-# Laravel-5-Interview-Questions
-Laravel 5 Interview Questions
+1. What is Laravel ?
+Laravel is free open source “PHP framework” based on MVC Design Pattern .
+It is created by Taylor Otwell. Laravel provides expressive and elegant syntax that helps in creating a wonderful web application easily and quickly.
 
+2. List some official packages provided by Laravel? 
+Cashier
+Envoy
+Passport
+Scout
+Socialite
+ 3. List out latest features of Laravel. 
+Inbuilt CRSF (cross-site request forgery ) Protection.
+Inbuilt paginations
+Reverse Routing
+Query builder
+Route caching
+Database Migration
+IOC (Inverse of Control) Container Or service container. 
+4. List out some benefits of Laravel over other Php frameworks.  
+Setup and customization process is  easy and fast as compared to others.
+Inbuilt Authentication System.
+Supports multiple file systems
+Pre-loaded packages like Laravel Socialite, Laravel cashier, Laravel elixir,Passport,Laravel Scout.
+Eloquent ORM (Object Relation Mapping) with PHP active record implementation. 
+Built in command line tool “Artisan” for creating a code skeleton ,database structure and build their migration.
+5. What is composer ?
 
-This is a compiled list of Laravel interview questions. If Laravel is an engineer's PHP framework of choice, they definitely have potential to be a good candidate, but a lot of new PHP engineers have been into Laravel too. The framework itself is very welcoming to newcomers, which makes it easy for beginners to feel that they know more than they really do.
+ Composer is PHP dependency manager used for installing dependencies of PHP applications.
 
-General Questions
+6. How to install laravel via composer ?
 
-1. How long have you been using Laravel?
+composer create-project laravel/laravel your-project-name version
 
-This question can help decide what level of questions to ask.
+7. How to check laravel current version ?
+You can check the current version of your Laravel installation using the --version option of artisan command
+Usages:- php artisan --version  
 
-2. What version of Laravel do you generally use?
+8. What is php artisan. List out some artisan command ?
+PHP artisan is the command line interface/tool included with Laravel. It provides a number of helpful commands that can help you while you build your application easily. Here are the list of some artisian command:- 
+php artisan list
+php artisan help
+php artisan tinker
+php artisan make
+php artisan --versian
+php artisan make modal modal_name
+php artisan make controller controller_name 
+9. Explain Events in laravel ?
+An event is an incident or occurrence detected and handled by the program.Laravel event provides a simple observer implementation,that allow us  to subscribe and listen for events in our application.
+Below are some events examples in laravel :-
+A new user has registered
+A new comment is posted
+User login/logout
+New product is added.
+10. How to enable query log in laravel?
+Use the enableQueryLog method:
+DB::connection()->enableQueryLog(); 
+You can get array of the executed queries by using getQueryLog method:
+$queries = DB::getQueryLog();
 
-The current version is 5.1.x which has been named LTS. Before 5.x was released, 4.2 was the version a lot of people used. It doesn't matter exactly which version they used (although 5.1.x is a better answer to hear), but it's nice to hear how they talk about the different versions.
-
-If they say they used to use 4.x but now use 5.x here are some potential questions:
-
-Do you like the new folder structure introduced in 5.0?
-Did you migrate any existing 4.x applications to 5.x? If yes, tell me about that.
-3. Why Laravel over other PHP frameworks?
-
-If they haven't used other frameworks, that's OK. If they answer that they haven't used other frameworks then it's important to dig deep into these questions. If they have used other frameworks, ask about the differences and see if they are passionate about Laravel or just have jumped on the bandwagon.
-
-4. What is your favorite feature of Laravel?
-
-If they only say "it's easy to get started" then it's probably safe to assume they are not an expert.
-
-5. Have you used Lumen before?
-
-Lumen is the micro-framework by Laravel that was made by Taylor specifically for APIs and microservices. If they've decided to use Lumen over Larvel for a microservice or API, it shows that they care about performance.
-
-Technical Questions
-
-Beginner Level Questions
-
-1. I've already created a database table that I want to use with Laravel's ORM. How would I setup a class to do that?
-
-Laravel's ORM is called Eloquent. There are two main ways to go about doing this. The first one would be to physically write a class:
-
-<?php
-
-namespace App;
-
-use Illuminate\Database\Eloquent\Model;
-
-class Cat extends Model
-{
-    /**
-     * The database table used by the model.
-     *
-     * @var string
-     */
-    protected $table = 'cats';
+11. How to turn off CRSF protection for a route in Laravel?
+In "app/Http/Middleware/VerifyCsrfToken.php"
+ //add an array of Routes to skip CSRF check
+ private $exceptUrls = ['controller/route1', 'controller/route2'];
+ //modify this function
+public function handle($request, Closure $next) {
+ //add this condition foreach($this->exceptUrls as $route) {
+ if ($request->is($route)) {
+  return $next($request);
+ }
 }
-And the second one would be to use the artisan CLI, which generates a class:
+return parent::handle($request, $next);
+}
 
-php artisan make:model Cat 
-2. Laravel comes with a PHP CLI called artisan. What is your favorite artisan command?
+12. What is Lumen?
+Lumen is PHP micro framework that built on  Laravel's top components. It is created by Taylor Otwell. It is perfect option for building Laravel based micro-services and  fast REST API's. It's one of the fastest micro-frameworks available.
 
-There are so many things that the CLI does out of the box. Even if they don't have a favorite command, they should be able to explain what some of them do. Here's a sample of available top-level commands:
+13. What are laravel facades?
+Laravel Facades provides a static like interface to classes that are available in the application's service container. Laravel self ships with many facades which provide access to almost all features of Laravel's . Laravel facades serve as "static proxies" to underlying classes in the service container and provides benefits of a terse, expressive syntax while maintaining more testability and flexibility than traditional static methods of classes. All of Laravel's facades are defined in the Illuminate\Support\Facades namespace. You can easily access a facade like so: 
+  
+use Illuminate\Support\Facades\Cache;
 
-Available commands:
-  clear-compiled      Remove the compiled class file
-  down                Put the application into maintenance mode
-  env                 Display the current framework environment
-  help                Displays help for a command
-  inspire             Display an inspiring quote
-  list                Lists commands
-  migrate             Run the database migrations
-  optimize            Optimize the framework for better performance
-  serve               Serve the application on the PHP development server
-  tinker              Interact with your application
-  up                  Bring the application out of maintenance mode
-3. I just have installed a fresh version of Laravel 5, and I have the white screen of death. What's wrong?
+Route::get('/cache', function () {
+    return Cache::get('key');
+}); 
 
-It's a permissions problem. If there was a PHP problem you'd recieve a verbose message (unles debug mode was set to false) explaining the problem. Almost everyone who has used Laravel has had this permissions error at some point, but even if they have not, they should be able to figure out that there's a permissions error.
+14. What are laravel Contracts?
+Laravel's Contracts are nothing but  set of interfaces that define the core services provided by the Laravel framework.
+You can read about How to Laravel contracts by How to use Laravel facade .
 
-Intermediate Level Questions
+15. Explain Laravel service container ?
+One of the most powerful feature of Laravel is its Service Container 
+It is a powerful tool for resolving  class dependencies and performing dependency injection  in Laravel .
+Dependency injection is a fancy phrase that essentially means  class dependencies are "injected" into the class via the constructor or, in some cases, "setter" methods.
+You can read  more from here 
 
-1. Laravel 5 has built in CSRF protection on every route. How would I go about turning that off?
+16. How can you get users IP address  in Laravel ?
 
-Hopefully they mention that CSRF protection is important, but since we're asking them to turn it off they might not mention it which is OK. You'd easily turn it off by going into Kernel.php and removing it from the middleware stack that is ran on every route.
+public function getUserIp(Request $request){
 
-This is also a good place to ask about middleware in general and make sure they both understand what middleware is and why it's important.
 
-2. Have you written any custom middleware for a Laravel applicaton? If so, tell me about a time you did.
+// Getting ip address of remote user 
 
-If they've never had to write any custom middleware then they most likely have not written any complex applications, or were not the lead engineer on a complex application project.
+return $user_ip_address=$requeest->ip();
+
+
+} 
+
+17. How to use custom table in Laravel Modal ?
+
+We can use custom table in laravel by overriding protected $table property of Eloquent. Below is sample uses
+
+class User extends Eloquent{
+ protected $table="my_user_table";
+
+}  
+
+18 . How to define Fillable Attribute in Laravel Modal ?
+
+You can define fillable attribute by overiding the fillable property of Laravel Eloquent. Here is sample uses
+
+Class User extends Eloquent{
+
+protected $fillable =array('id','first_name','last_name','age');
+
+
+}
+
+19. What is in vender directory of Laravel?
+
+Any packages we pulled from composer is kept in vendor directory of laravel.
+
+20. In which directory controllers are located in Laravel ?
+
+We kept all controllers in
+app/http/Controllers directory
+
+21 .What does PHP compact function do ?
+
+PHP compact function takes each key and tries to find a variable with that same name.If variable is found , them it builds an associative array. 
